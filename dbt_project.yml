@@ -15,7 +15,8 @@ profile: 'default'
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
+# seed-paths: ["seeds"]
+seed-paths: ["seeds", "init-data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -36,13 +37,18 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  +query_tag: dbt_example
+  +query_tag: dbt_example_model
   my_dbt_project:
     marts:
       materialized: table
-#    intermediate:
-#      materialized: ephemeral
+    intermediate:
+      materialized: ephemeral
     staging:
       materialized: view
 
-
+seeds:
+  +query_tag: dbt_example_seed
+  my_dbt_project:
+    jaffle_shop:
+      +schema: jaffle_shop
+  
